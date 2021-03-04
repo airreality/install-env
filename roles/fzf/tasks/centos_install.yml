@@ -1,0 +1,17 @@
+---
+- name: Clone fzf repo
+  git:
+    repo: "{{ fzf_repo }}"
+    dest: "{{ fzf_src_dst }}"
+    version: "{{ fzf_repo_version }}"
+    force: yes
+
+- name: Install fzf
+  command: "./install --all"
+  args:
+    chdir: "{{ fzf_src_dst }}"
+
+- name: Copy binary files fzf
+  command: "mv bin/fzf bin/fzf-tmux /usr/bin/"
+  args:
+    chdir: "{{ fzf_src_dst }}"

@@ -1,0 +1,13 @@
+---
+- name: Base CentOS packages install
+  include_tasks: centos_install.yml
+  when: ansible_distribution | lower == "centos"
+
+- name: Base Ubuntu packages install
+  include_tasks: ubuntu_install.yml
+  when: ansible_distribution | lower == "ubuntu"
+
+- name: Common packages install
+  package:
+    name: "{{ common_packages }}"
+    state: present

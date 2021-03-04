@@ -1,0 +1,4 @@
+---
+fzf_repo: "https://github.com/junegunn/fzf.git"
+fzf_repo_version: "master"
+fzf_src_dst: "/tmp/fzf"

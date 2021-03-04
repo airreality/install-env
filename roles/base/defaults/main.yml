@@ -1,0 +1,14 @@
+---
+common_packages:
+  - "wget"
+  - "curl"
+  - "tree"
+  - "jq"
+  - "tmux"
+  - "git"
+
+centos_packages:
+  - "the_silver_searcher"
+
+ubuntu_packages:
+  - "silversearcher-ag"

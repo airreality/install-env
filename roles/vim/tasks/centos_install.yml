@@ -1,0 +1,26 @@
+---
+- name: Clone vim repo
+  git:
+    repo: "{{ vim_repo }}"
+    dest: "{{ vim_src_dst }}"
+    version: "{{ vim_repo_version }}"
+    force: yes
+
+- name: Install packages to compile vim
+  package:
+    name: "{{ centos_packages_to_compile_vim }}"
+    state: present
+
+- name: Install vim
+  command: "{{ item }}"
+  with_items:
+    - ./configure --with-features=huge --enable-python3interp --prefix=/usr
+    - make
+    - make install
+  args:
+    chdir: "{{ vim_src_dst }}"
+
+- name: Remove packages to compile vim
+  package:
+    name: "{{ centos_packages_to_compile_vim }}"
+    state: absent

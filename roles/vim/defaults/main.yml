@@ -1,0 +1,13 @@
+---
+vim_repo: "https://github.com/vim/vim"
+vim_repo_version: "master"
+vim_src_dst: "/tmp/vim"
+vundle_repo: "https://github.com/VundleVim/Vundle.vim.git"
+vundle_repo_version: "master"
+vundle_src_dst: "~/.vim/bundle/Vundle.vim"
+centos_packages_to_compile_vim:
+  - "make"
+  - "cmake"
+  - "gcc-c++"
+  - "ctags"
+  - "ncurses-devel"

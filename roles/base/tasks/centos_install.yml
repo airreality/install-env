@@ -1,0 +1,16 @@
+---
+- name: Epel install
+  package:
+    name: epel-release
+    state: present
+
+- name: Base CentOS packages install
+  package:
+    name: "{{ centos_packages }}"
+    state: present
+    update_cache: yes
+
+- name: Upgrade all packages
+  yum:
+    name: '*'
+    state: latest

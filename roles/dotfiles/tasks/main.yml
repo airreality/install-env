@@ -1,0 +1,30 @@
+---
+- name: Clone dotfiles repo
+  git:
+    repo: "{{ dotfiles_repo }}"
+    dest: "{{ dotfiles_repo_local_destination }}"
+    version: "{{ dotfiles_repo_version }}"
+    force: yes
+
+- name: Remove existing dotfiles
+  file:
+    path: "{{ dotfiles_home }}/{{ item }}"
+    state: absent
+  with_items:
+    - "{{ dotfiles_files | map(attribute='src') }}"
+    - "{{ dotfiles_files_to_rename | map(attribute='src') }}"
+    - "{{ dotfiles_files_to_rename | map(attribute='dst') }}"
+
+- name: Link dotfiles into home folder
+  file:
+    src: "{{ dotfiles_repo_local_destination }}/{{ item.src }}"
+    dest: "{{ dotfiles_home }}/{{ item.src }}"
+    state: link
+    mode: 0644
+  with_items:
+    - "{{ dotfiles_files }}"
+    - "{{ dotfiles_files_to_rename }}"
+
+- name: Rename dotfiles to rename
+  command: "mv {{ dotfiles_home }}/{{ item.src }} {{ dotfiles_home }}/{{ item.dst }}"
+  with_items: "{{ dotfiles_files_to_rename }}"

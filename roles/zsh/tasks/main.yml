@@ -1,0 +1,50 @@
+---
+- name: Install zsh
+  package:
+    name: zsh
+    state: present
+
+- name: Download oh_my_zsh_installer
+  get_url:
+    url: "{{ oh_my_zsh_installer }}"
+    dest: "{{ oh_my_zsh_installer_dst }}"
+
+- name: Install oh_my_zsh
+  command: "sh {{ oh_my_zsh_installer_dst }} --unattended"
+  environment:
+    ZSH: "{{ oh_my_zsh_path }}"
+
+- name: Link zsh theme
+  file:
+    src: "{{ dotfiles_repo_local_destination }}/{{ zsh_theme_path }}"
+    dest: "{{ zsh_theme_dst }}"
+    state: link
+
+- name: Install zsh autosuggestions plugin
+  git:
+    repo: "{{ zsh_autosuggestions_repo }}"
+    dest: "{{ zsh_autosuggestions_repo_local_destination }}"
+    version: "{{ zsh_autosuggestions_repo_version }}"
+    force: yes
+
+- name: Install zsh highlighting plugin
+  git:
+    repo: "{{ zsh_highlighting_repo }}"
+    dest: "{{ zsh_highlighting_repo_local_destination }}"
+    version: "{{ zsh_highlighting_repo_version }}"
+    force: yes
+
+- name: Remove existing zshrc
+  file:
+    path: "{{ dotfiles_home }}/.zshrc"
+    state: absent
+
+- name: Link .zshrc
+  file:
+    src: "{{ dotfiles_repo_local_destination }}/.zshrc"
+    dest: "{{ dotfiles_home }}/.zshrc"
+    state: link
+    mode: 0644
+
+- name: Change shell to zsh
+  command: "chsh -s /usr/bin/zsh"

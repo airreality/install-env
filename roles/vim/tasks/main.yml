@@ -1,0 +1,20 @@
+---
+- name: Install vim
+  package:
+    name: vim
+    state: present
+  when: ansible_distribution | lower == "ubuntu"
+
+- name: CentOS vim install
+  include_tasks: centos_install.yml
+  when: ansible_distribution | lower == "centos"
+
+- name: Install vundle
+  git:
+    repo: "{{ vundle_repo }}"
+    dest: "{{ vundle_src_dst }}"
+    version: "{{ vundle_repo_version }}"
+    force: yes
+
+- name: Install vim plugins
+  command: "vim +PluginInstall +qall"

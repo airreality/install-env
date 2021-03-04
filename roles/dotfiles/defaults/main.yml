@@ -1,0 +1,11 @@
+---
+dotfiles_repo: "https://github.com/airreality/.dotfiles.git"
+dotfiles_repo_version: master
+dotfiles_repo_local_destination: "~/.dotfiles"
+dotfiles_home: "~"
+dotfiles_files:
+  - { src: .bashrc }
+  - { src: .aliases_docker }
+dotfiles_files_to_rename:
+  - { src: .vimrc_lite, dst: .vimrc }
+  - { src: .aliases_test_servers, dst: .aliases }

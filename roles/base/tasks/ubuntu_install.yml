@@ -1,0 +1,11 @@
+---
+- name: Base Ubuntu packages install
+  package:
+    name: "{{ ubuntu_packages }}"
+    state: present
+    update_cache: yes
+
+- name: Upgrade all packages
+  apt:
+    name: '*'
+    state: latest
